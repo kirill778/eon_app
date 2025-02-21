@@ -216,14 +216,14 @@ export default function LoginPage() {
         <div className="text-center mb-[34px]">
           <p className="text-white/50 mb-[18px] font-normal text-[13px] leading-[16px] text-center">Войти через</p>
           <div className="flex justify-center gap-4">
-            <button className="p-2 rounded-full bg-[#229ED9] hover:opacity-90 transition-opacity">
-              <img src="/tg.svg" alt="Telegram" className="w-6 h-6" />
+            <button className="w-[42px] h-[42px] rounded-full hover:opacity-90 transition-opacity">
+              <img src="/tg.png" alt="Telegram" className="w-[42px] h-[42px]" />
             </button>
-            <button className="p-2 rounded-full bg-white hover:opacity-90 transition-opacity">
-              <img src="/g.svg" alt="Google" className="w-6 h-6" />
+            <button className="w-[42px] h-[42px] rounded-full hover:opacity-90 transition-opacity">
+              <img src="/g.svg" alt="Google" className="w-[42px] h-[42px]" />
             </button>
-            <button className="p-2 rounded-full bg-black hover:opacity-90 transition-opacity">
-              <img src="/x.svg" alt="X" className="w-6 h-6" />
+            <button className="w-[42px] h-[42px] rounded-full hover:opacity-90 transition-opacity">
+              <img src="/x.svg" alt="X" className="w-[42px] h-[42px]" />
             </button>
           </div>
         </div>
