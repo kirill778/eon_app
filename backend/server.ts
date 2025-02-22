@@ -50,6 +50,6 @@ const helloHandler: express.RequestHandler = (req, res): void => {
 
 app.post("/api/hello", helloHandler);
 
-app.listen(PORT, HOST, () => {
-  console.log(`Сервер запущен на http://${HOST}:${PORT}`);
+app.listen(5000, 'localhost', () => {
+  console.log(`Server is running on http://localhost:5000`);
 });
