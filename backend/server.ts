@@ -29,27 +29,20 @@ app.use(express.json());
 app.use('/api', routes);
 
 const PORT = parseInt(process.env.PORT || '5000', 10);
-const HOST = '0.0.0.0'; // Слушаем все сетевые интерфейсы
 
 // Обработчик GET /
 app.get("/", (req: express.Request, res: express.Response) => {
-  res.json({ message: "Backend работает!" });
+  res.json({ status: "ok", message: "Backend API is running" });
 });
 
-// Обработчик POST /api/hello
-const helloHandler: express.RequestHandler = (req, res): void => {
-  const { name } = req.body;
-  
-  if (!name) {
-    res.status(400).json({ error: "Name is required" });
-    return;
-  }
-  
-  res.json({ message: `Привет, ${name}!` });
-};
-
-app.post("/api/hello", helloHandler);
-
-app.listen(5000, 'localhost', () => {
-  console.log(`Server is running on http://localhost:5000`);
+// Обработчик для всех остальных маршрутов
+app.use('*', (req: express.Request, res: express.Response) => {
+  res.status(404).json({ status: "error", message: "Route not found" });
 });
+
+// Запуск сервера
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+export default app;
