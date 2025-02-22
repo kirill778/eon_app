@@ -43,7 +43,7 @@ export default function LoginPage() {
         {/* Header */}
         <div className="flex justify-between items-center mt-[44px] mb-[5px]">
           <h1 className="text-white/30 font-normal text-[20px] leading-[24px] ml-[0px] ">Вход</h1>
-          <button className="rounded-full p-2 hover:bg-white/10 pt-[0px] pr-[0px] transition-colors">
+          <button className="rounded-full p-2 pt-[0px] pr-[0px] transition-colors">
             <svg 
               width="38" 
               height="38" 
