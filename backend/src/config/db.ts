@@ -3,21 +3,81 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const pool = new Pool({
-  user: process.env.DB_USER,      // Имя пользователя БД
-  host: process.env.DB_HOST,      // Адрес сервера БД
-  database: process.env.DB_NAME,  // Имя базы данных
-  password: process.env.DB_PASSWORD, // Пароль пользователя
-  port: parseInt(process.env.DB_PORT || '5432'),      // Порт подключения (обычно 5432)
-});
+// Define interfaces for different types of database rows
+interface TimeRow {
+  now: string;
+}
 
-// Проверка подключения
-pool.query('SELECT NOW()', (err, res) => {
-  if (err) {
-    console.error('Ошибка подключения к БД:', err);
-  } else {
-    console.log('БД подключена успешно');
+interface UserRow {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+}
+
+interface UserBasicRow {
+  id: number;
+  username: string;
+  email: string;
+}
+
+interface CourseRow {
+  id: number;
+  title: string;
+  description: string;
+}
+
+// Create a mock pool for development/testing
+const pool = {
+  query: async (text: string, params?: any[]): Promise<{ rows: any[] }> => {
+    // Mock for SELECT NOW()
+    if (text === 'SELECT NOW()') {
+      return { rows: [{ now: new Date().toISOString() }] };
+    }
+    // Mock for checking user
+    if (text.includes('SELECT * FROM users WHERE')) {
+      return { rows: [{
+        id: 1,
+        username: 'test_user',
+        email: 'test@example.com',
+        password: 'hashed_password'
+      }] };
+    }
+    // Mock for creating user
+    if (text.includes('INSERT INTO users')) {
+      const [username, email] = params || [];
+      return { 
+        rows: [{ 
+          id: 1, 
+          username, 
+          email,
+          password: 'mocked_password'
+        }]
+      };
+    }
+    // Mock for getting user data
+    if (text.includes('SELECT id, username, email FROM users')) {
+      return { 
+        rows: [{ 
+          id: 1, 
+          username: 'test_user', 
+          email: 'test@example.com'
+        }]
+      };
+    }
+    // Mock for getting course
+    if (text.includes('SELECT * FROM courses')) {
+      return { 
+        rows: [{ 
+          id: 1, 
+          title: 'Test Course', 
+          description: 'Test Description' 
+        }]
+      };
+    }
+    // Default response
+    return { rows: [] };
   }
-});
+};
 
 export default pool;
