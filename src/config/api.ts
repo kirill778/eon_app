@@ -3,7 +3,7 @@ const LOCAL_IP = '192.168.1.4'; // Замените на IP вашего ком�
 
 export const API_URL = isDevelopment 
   ? `http://${LOCAL_IP}:5000/api`
-  : '/api';
+  : 'https://eon-backend.onrender.com/api';
 
 export const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
   const url = `${API_URL}${endpoint}`;
@@ -25,4 +25,4 @@ export const apiRequest = async (endpoint: string, options: RequestInit = {}) =>
   }
 
   return response.json();
-}; 
+};
