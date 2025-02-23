@@ -151,7 +151,7 @@ export default function LoginPage() {
             </svg>
             <input
               type="text"
-              placeholder="Логин"
+              placeholder="Почта"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               disabled={isLoading}
