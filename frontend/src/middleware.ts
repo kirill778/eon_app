@@ -10,18 +10,14 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname.startsWith(path)
   )
 
+  // Только перенаправляем на логин если пытаемся зайти на защищенный маршрут без токена
   if (isProtectedPath && !token) {
     return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // Если пользователь авторизован и пытается зайти на страницу логина
-  if (token && request.nextUrl.pathname === '/login') {
-    return NextResponse.redirect(new URL('/courses', request.url))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/courses/:path*', '/course/:path*', '/account/:path*', '/login']
+  matcher: ['/courses/:path*', '/course/:path*', '/account/:path*']
 } 
