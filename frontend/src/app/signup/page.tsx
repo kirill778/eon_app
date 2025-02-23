@@ -7,6 +7,7 @@ import { useState } from "react"
 import { ArrowLeft } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import { apiRequest } from '@/config/api'
 
 export default function SignupForm() {
   const router = useRouter()
@@ -36,24 +37,12 @@ export default function SignupForm() {
     console.log('Отправляемые данные:', formData) // Для отладки
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: 'include'
-      })
-
-      const data = await response.json()
-      console.log('Ответ сервера:', data) // Для отладки
-
-      if (!response.ok) {
-        throw new Error(data.error || "Ошибка при регистрации")
-      }
+      await apiRequest('/auth/signup', {
+        method: 'POST',
+        body: JSON.stringify(formData)
+      });
 
       setSuccess("Регистрация успешна!")
-      // Перенаправляем на страницу логина
       setTimeout(() => {
         router.push("/login")
       }, 1500)

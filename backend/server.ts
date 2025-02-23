@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import routes from './src/routes';
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import pool from './src/config/db';
 
 dotenv.config();
 
@@ -14,12 +15,15 @@ const app = express();
 app.use(cors({
   origin: [
     'http://localhost:3000',
+    'http://185.197.75.250',
     'http://185.197.75.250:3000',
-    'http://185.197.75.250'
+    'https://185.197.75.250',
+    'https://185.197.75.250:3000'
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
+  allowedHeaders: ['Content-Type', 'Authorization', 'Cookie', 'X-Requested-With'],
+  exposedHeaders: ['Set-Cookie']
 }));
 
 // Добавляем парсер для cookies
@@ -32,61 +36,12 @@ app.use(express.json());
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
   console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
+  if (req.method === 'POST') console.log('Body:', req.body);
   next();
 });
 
 // Подключаем маршруты
 app.use('/api', routes);
-
-// Обновляем обработчик логина
-app.post('/auth/login', async (req: Request, res: Response): Promise<void> => {
-  console.log('Login attempt:', req.body);
-
-  const { username, password } = req.body;
-  
-  // Hardcoded credentials for testing
-  const ADMIN_USERNAME = 'admin@yandex.ru';
-  const ADMIN_PASSWORD = '1234';
-
-  try {
-    if (!username || !password) {
-      res.status(400).json({ error: 'Необходимо указать логин и пароль' });
-      return;
-    }
-
-    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
-      console.log('Invalid credentials');
-      res.status(401).json({ error: 'Неверный логин или пароль' });
-      return;
-    }
-
-    // Create JWT token
-    const token = jwt.sign(
-      { userId: 1, username: ADMIN_USERNAME },
-      process.env.JWT_SECRET || 'your-secret-key',
-      { expiresIn: '24h' }
-    );
-
-    // Set token in cookie
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    });
-
-    res.json({ 
-      message: 'Успешная авторизация',
-      user: { id: 1, username: ADMIN_USERNAME }
-    });
-  } catch (error) {
-    console.error('Server error:', error);
-    res.status(500).json({ error: 'Ошибка сервера' });
-  }
-});
-
-const PORT = parseInt(process.env.PORT || '5000', 10);
 
 // Обработчик GET /
 app.get("/", (req: express.Request, res: express.Response) => {
@@ -99,8 +54,18 @@ app.use('*', (req: express.Request, res: express.Response) => {
 });
 
 // Запуск сервера
-const server = app.listen(PORT, '0.0.0.0', () => {
+const PORT = parseInt(process.env.PORT || '5000', 10);
+
+const server = app.listen(PORT, '0.0.0.0', async () => {
   console.log(`Server is running on port ${PORT}`);
+
+  // Проверяем подключение к базе данных
+  try {
+    await pool.query('SELECT NOW()');
+    console.log('Successfully connected to PostgreSQL');
+  } catch (err) {
+    console.error('Error connecting to the database:', err);
+  }
 });
 
 export default app;

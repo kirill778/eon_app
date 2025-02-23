@@ -3,6 +3,29 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+// Create a real PostgreSQL connection pool
+const pool = new Pool({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || '5432'),
+  database: process.env.DB_NAME
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle client', err);
+  process.exit(-1);
+});
+
+// Test the database connection
+pool.query('SELECT NOW()', (err, res) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+  } else {
+    console.log('Successfully connected to PostgreSQL');
+  }
+});
+
 // Define interfaces for different types of database rows
 interface TimeRow {
   now: string;
@@ -27,57 +50,20 @@ interface CourseRow {
   description: string;
 }
 
-// Create a mock pool for development/testing
-const pool = {
-  query: async (text: string, params?: any[]): Promise<{ rows: any[] }> => {
-    // Mock for SELECT NOW()
-    if (text === 'SELECT NOW()') {
-      return { rows: [{ now: new Date().toISOString() }] };
-    }
-    // Mock for checking user
-    if (text.includes('SELECT * FROM users WHERE')) {
-      return { rows: [{
-        id: 1,
-        username: 'test_user',
-        email: 'test@example.com',
-        password: 'hashed_password'
-      }] };
-    }
-    // Mock for creating user
-    if (text.includes('INSERT INTO users')) {
-      const [username, email] = params || [];
-      return { 
-        rows: [{ 
-          id: 1, 
-          username, 
-          email,
-          password: 'mocked_password'
-        }]
-      };
-    }
-    // Mock for getting user data
-    if (text.includes('SELECT id, username, email FROM users')) {
-      return { 
-        rows: [{ 
-          id: 1, 
-          username: 'test_user', 
-          email: 'test@example.com'
-        }]
-      };
-    }
-    // Mock for getting course
-    if (text.includes('SELECT * FROM courses')) {
-      return { 
-        rows: [{ 
-          id: 1, 
-          title: 'Test Course', 
-          description: 'Test Description' 
-        }]
-      };
-    }
-    // Default response
-    return { rows: [] };
-  }
-};
+// SQL для создания таблицы пользователей
+const createUsersTable = `
+  CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  );
+`;
+
+// Создаем таблицу при инициализации
+pool.query(createUsersTable)
+  .then(() => console.log('Users table created or already exists'))
+  .catch(err => console.error('Error creating users table:', err));
 
 export default pool;

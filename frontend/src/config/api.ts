@@ -12,31 +12,27 @@ const getApiUrl = () => {
   return 'http://185.197.75.250:5000';
 };
 
-const API_URL = getApiUrl();
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://185.197.75.250:5000/api';
 
 export const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
-  console.log('Making request to:', `${API_URL}${endpoint}`);
+  const url = `${API_URL}${endpoint}`;
+  
+  const defaultOptions: RequestInit = {
+    credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
 
-  try {
-    const response = await fetch(`${API_URL}${endpoint}`, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-      credentials: 'include',
-    });
+  const response = await fetch(url, {
+    ...defaultOptions,
+    ...options,
+  });
 
-    console.log('Response status:', response.status);
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Произошла ошибка');
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error('API Request error:', error);
-    throw error;
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || 'Произошла ошибка');
   }
+
+  return response.json();
 };

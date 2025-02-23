@@ -20,25 +20,43 @@ router.get('/test', async (req: Request, res: Response) => {
 // Маршрут для аутентификации
 router.post('/auth/login', async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
-  
-  // Hardcoded admin credentials for testing
-  const ADMIN_USERNAME = 'admin';
-  const ADMIN_PASSWORD = '1234';
 
   try {
-    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+    // Проверяем обязательные поля
+    if (!username || !password) {
+      res.status(400).json({ error: 'Необходимо указать логин и пароль' });
+      return;
+    }
+
+    // Ищем пользователя по email (username в данном случае это email)
+    const result = await pool.query(
+      'SELECT * FROM users WHERE email = $1',
+      [username]
+    );
+
+    if (result.rows.length === 0) {
       res.status(401).json({ error: 'Неверный логин или пароль' });
       return;
     }
 
-    // Create JWT token
+    const user = result.rows[0];
+
+    // Проверяем пароль
+    const isValidPassword = await bcrypt.compare(password, user.password);
+
+    if (!isValidPassword) {
+      res.status(401).json({ error: 'Неверный логин или пароль' });
+      return;
+    }
+
+    // Создаем JWT токен
     const token = jwt.sign(
-      { userId: 1, username: ADMIN_USERNAME },
+      { userId: user.id, username: user.username },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
 
-    // Set token in cookie
+    // Устанавливаем cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
@@ -46,44 +64,41 @@ router.post('/auth/login', async (req: Request, res: Response): Promise<void> =>
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     });
 
+    // Отправляем успешный ответ
     res.json({ 
       message: 'Успешная авторизация',
-      user: { id: 1, username: ADMIN_USERNAME }
+      user: {
+        id: user.id,
+        username: user.username,
+        email: user.email
+      }
     });
+
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('Ошибка при входе:', error);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
 
 // Маршрут для регистрации
 router.post('/auth/signup', async (req: Request, res: Response): Promise<void> => {
-  console.log('=== Начало регистрации ===');
-  console.log('Получены данные:', req.body);
+  console.log('Получен запрос на регистрацию:', req.body);
   
   const { login, email, password, confirmPassword } = req.body;
   
   try {
-    console.log('Проверка существования пользователя...');
-    const existingUser = await pool.query(
-      'SELECT * FROM users WHERE email = $1 OR username = $2',
-      [email, login]
-    );
-    console.log('Результат проверки:', existingUser.rows.length === 0 ? 'Пользователь не найден' : 'Пользователь существует');
-
     // Проверка наличия всех полей
     if (!login || !email || !password || !confirmPassword) {
       res.status(400).json({ error: 'Все поля обязательны для заполнения' });
       return;
     }
 
-    // Проверка совпадения паролей
-    if (password !== confirmPassword) {
-      res.status(400).json({ error: 'Пароли не совпадают' });
-      return;
-    }
-
     // Проверка существования пользователя
+    const existingUser = await pool.query(
+      'SELECT * FROM users WHERE email = $1 OR username = $2',
+      [email, login]
+    );
+
     if (existingUser.rows.length > 0) {
       res.status(400).json({ error: 'Пользователь с таким email или логином уже существует' });
       return;
@@ -92,7 +107,7 @@ router.post('/auth/signup', async (req: Request, res: Response): Promise<void> =
     // Хеширование пароля
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Создание нового пользователя
+    // Создание пользователя
     const result = await pool.query(
       'INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING id, username, email',
       [login, email, hashedPassword]
@@ -102,21 +117,23 @@ router.post('/auth/signup', async (req: Request, res: Response): Promise<void> =
 
     // Создание JWT токена
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: user.id, username: user.username },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
 
-    // Отправка токена в куки
+    // Установка cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 24 * 60 * 60 * 1000
     });
 
-    console.log('Регистрация успешна');
-    res.status(201).json({ message: 'Регистрация успешна' });
+    res.status(201).json({ 
+      message: 'Регистрация успешна',
+      user: { id: user.id, username: user.username }
+    });
   } catch (error) {
     console.error('Ошибка при регистрации:', error);
     res.status(500).json({ error: 'Ошибка сервера' });
