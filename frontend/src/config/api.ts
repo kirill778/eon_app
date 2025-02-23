@@ -1,4 +1,13 @@
-const API_URL = 'http://localhost:5000'; // Уберем /api из базового URL
+// Определяем базовый URL API в зависимости от окружения
+const getApiUrl = () => {
+  const hostname = window.location.hostname;
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return 'http://localhost:5000';
+  }
+  return 'http://185.197.75.250:5000'; // URL вашего сервера
+};
+
+const API_URL = getApiUrl();
 
 export const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
   console.log('Making request to:', `${API_URL}${endpoint}`); // Добавим логирование

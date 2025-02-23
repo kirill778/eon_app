@@ -12,7 +12,11 @@ const app = express();
 
 // Настройка CORS
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://185.197.75.250:3000'],
+  origin: [
+    'http://localhost:3000',
+    'http://185.197.75.250:3000',
+    'http://185.197.75.250'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
@@ -23,6 +27,14 @@ app.use(cookieParser());
 
 // Парсер для JSON
 app.use(express.json());
+
+// Добавим middleware для логирования запросов
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
+  next();
+});
 
 // Подключаем маршруты
 app.use('/api', routes);
@@ -87,7 +99,7 @@ app.use('*', (req: express.Request, res: express.Response) => {
 });
 
 // Запуск сервера
-const server = app.listen(PORT, () => {
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
