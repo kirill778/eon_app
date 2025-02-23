@@ -20,13 +20,17 @@ export default function LoginPage() {
     setIsLoading(true)
 
     try {
-      const data = await apiRequest('/auth/login', {
+      console.log('Attempting login with:', { username, password });
+
+      await apiRequest('/auth/login', {
         method: 'POST',
         body: JSON.stringify({ username, password })
       });
       
+      console.log('Login successful');
       router.push("/courses")
     } catch (err) {
+      console.error('Login error:', err);
       setError(err instanceof Error ? err.message : "Произошла ошибка")
     } finally {
       setIsLoading(false)
@@ -146,7 +150,7 @@ export default function LoginPage() {
               </defs>
             </svg>
             <input
-              type="email"
+              type="text"
               placeholder="Логин"
               value={username}
               onChange={(e) => setUsername(e.target.value)}

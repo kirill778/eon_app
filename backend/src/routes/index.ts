@@ -21,46 +21,37 @@ router.get('/test', async (req: Request, res: Response) => {
 router.post('/auth/login', async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
   
+  // Hardcoded admin credentials for testing
+  const ADMIN_USERNAME = 'admin';
+  const ADMIN_PASSWORD = '1234';
+
   try {
-    // Изменяем запрос для поиска по email вместо username
-    const { rows } = await pool.query(
-      'SELECT * FROM users WHERE email = $1',
-      [username] // используем username из запроса как email
-    );
-    
-    if (rows.length === 0) {
-      res.status(401).json({ error: 'Неверный email или пароль' });
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      res.status(401).json({ error: 'Неверный логин или пароль' });
       return;
     }
 
-    const user = rows[0];
-    
-    // Проверяем пароль
-    const isValidPassword = await bcrypt.compare(password, user.password);
-    
-    if (!isValidPassword) {
-      res.status(401).json({ error: 'Неверный email или пароль' });
-      return;
-    }
-
-    // Создаем JWT токен с email вместо username
+    // Create JWT token
     const token = jwt.sign(
-      { userId: user.id, email: user.email },
+      { userId: 1, username: ADMIN_USERNAME },
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '24h' }
     );
 
-    // Отправляем токен в куки
+    // Set token in cookie
     res.cookie('token', token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 24 * 60 * 60 * 1000 // 24 часа
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
     });
 
-    res.json({ message: 'Успешный вход' });
+    res.json({ 
+      message: 'Успешная авторизация',
+      user: { id: 1, username: ADMIN_USERNAME }
+    });
   } catch (error) {
-    console.error(error);
+    console.error('Login error:', error);
     res.status(500).json({ error: 'Ошибка сервера' });
   }
 });
@@ -187,4 +178,4 @@ router.get('/courses/:id', async (req: Request, res: Response): Promise<void> =>
   }
 });
 
-export default router; 
+export default router;

@@ -1,28 +1,28 @@
-const isDevelopment = process.env.NODE_ENV === 'development';
-const LOCAL_IP = '192.168.1.4'; // Замените на IP вашего компьютера
-
-export const API_URL = isDevelopment 
-  ? `http://${LOCAL_IP}:5000/api`
-  : 'https://eon-backend.onrender.com/api';
+const API_URL = 'http://localhost:5000'; // Уберем /api из базового URL
 
 export const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
-  const url = `${API_URL}${endpoint}`;
-  const defaultOptions: RequestInit = {
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+  console.log('Making request to:', `${API_URL}${endpoint}`); // Добавим логирование
 
-  const response = await fetch(url, {
-    ...defaultOptions,
-    ...options,
-  });
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      credentials: 'include', // Important for cookies
+    });
 
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.error || 'Что-то пошло не так');
+    console.log('Response status:', response.status); // Добавим логирование
+
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.error || 'Произошла ошибка');
+    }
+
+    return response.json();
+  } catch (error) {
+    console.error('API Request error:', error); // Добавим логирование
+    throw error;
   }
-
-  return response.json();
 };

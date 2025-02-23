@@ -3,6 +3,8 @@ import cors from "cors";
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv";
 import routes from './src/routes';
+import jwt from 'jsonwebtoken';
+import { Request, Response } from 'express';
 
 dotenv.config();
 
@@ -10,18 +12,7 @@ const app = express();
 
 // Настройка CORS
 app.use(cors({
-  origin: function(origin, callback) {
-    const allowedOrigins = [
-      'https://eon-app-pi.vercel.app',
-      'http://localhost:3000',
-      'http://192.168.1.4:3000'
-    ];
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['http://localhost:3000', 'http://185.197.75.250:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'Cookie']
@@ -35,6 +26,53 @@ app.use(express.json());
 
 // Подключаем маршруты
 app.use('/api', routes);
+
+// Обновляем обработчик логина
+app.post('/auth/login', async (req: Request, res: Response): Promise<void> => {
+  console.log('Login attempt:', req.body);
+
+  const { username, password } = req.body;
+  
+  // Hardcoded credentials for testing
+  const ADMIN_USERNAME = 'admin@yandex.ru';
+  const ADMIN_PASSWORD = '1234';
+
+  try {
+    if (!username || !password) {
+      res.status(400).json({ error: 'Необходимо указать логин и пароль' });
+      return;
+    }
+
+    if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+      console.log('Invalid credentials');
+      res.status(401).json({ error: 'Неверный логин или пароль' });
+      return;
+    }
+
+    // Create JWT token
+    const token = jwt.sign(
+      { userId: 1, username: ADMIN_USERNAME },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    // Set token in cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    });
+
+    res.json({ 
+      message: 'Успешная авторизация',
+      user: { id: 1, username: ADMIN_USERNAME }
+    });
+  } catch (error) {
+    console.error('Server error:', error);
+    res.status(500).json({ error: 'Ошибка сервера' });
+  }
+});
 
 const PORT = parseInt(process.env.PORT || '5000', 10);
 
