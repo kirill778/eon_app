@@ -63,9 +63,9 @@ export default function SignupForm() {
           <img src="/back_btn.svg" alt="Back" className="h-[36px] w-[36px]" />
         </button>
 
-        <h1 className="text-2xl font-light text-white/30 mb-[35px] mt-[50px] font-inter text-[20px]">Создать аккаунт</h1>
+        <h1 className="text-2xl font-light text-white/30 mb-[12%] mt-[16%] font-inter text-[20px]">Создать аккаунт</h1>
 
-        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col items-center w-full">
+        <form onSubmit={handleSubmit} className="space-y-[28px] mb-[11.5%] flex flex-col items-center w-full">
           <div className="relative inline-block w-full h-[45px]">
             <svg
               width="100%"
@@ -250,7 +250,7 @@ export default function SignupForm() {
               width: "180px",
               height: "45px",
               left: "calc(50% - 180px/2 - 0.5px)",
-              top: "370px",
+              top: "68%",
               background: "#0A724A",
               boxShadow: "inset 0px 1px 1px #1DBC7F",
               borderRadius: "30px"
@@ -261,7 +261,7 @@ export default function SignupForm() {
         </form>
 
         <div className="mt-12 text-center">
-          <p className="text-white/50 mb-[14px] mt-[120px] font-inter text-[13px] leading-[16px] text-center font-normal">Войти через</p>
+          <p className="text-white/50 mb-[16px] mt-[118px] font-inter text-[13px] leading-[16px] text-center font-normal">Войти через</p>
           <div className="flex justify-center gap-4">
             <button className="w-[42px] h-[42px] rounded-full hover:opacity-90 transition-opacity">
               <img src="/tg.png" alt="Telegram" className="w-[42px] h-[42px]" />

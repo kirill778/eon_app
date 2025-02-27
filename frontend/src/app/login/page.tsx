@@ -46,8 +46,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md pt-[0px] relative z-10">
         {/* Header */}
         <div className="flex justify-between items-center mt-[44px] mb-[5px]">
-          <h1 className="text-white/30 font-normal text-[20px] leading-[24px] ml-[0px] ">Вход</h1>
-          <button className="rounded-full p-2 pt-[0px] pr-[0px] transition-colors">
+          <h1 className="text-white/30 font-normal text-[20px] leading-[24px] absolute w-[48px] h-[24px] left-[0%] top-[8%]">Вход</h1>
+          <button className="rounded-full p-2 pt-[0px] pr-[0px] transition-colors absolute right-[0%] top-[7.1%]">
             <svg 
               width="38" 
               height="38" 
@@ -82,7 +82,7 @@ export default function LoginPage() {
         </div>
 
         {/* Logo */}
-        <div className="flex justify-center items-center mb-[24px] relative">
+        <div className="flex justify-center items-center mb-[10.5%] mt-[12.5%] relative">
           <div className="w-[101px] h-[101px]">
             <svg 
               width="101" 
@@ -116,7 +116,7 @@ export default function LoginPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-[28px] mb-[28px] flex flex-col items-center w-full">
+        <form onSubmit={handleSubmit} className="space-y-[28px] mb-[11.5%] flex flex-col items-center w-full">
           <div className="relative inline-block w-full h-[45px]">
             <svg
               width="100%"
