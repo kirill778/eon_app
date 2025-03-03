@@ -48,6 +48,33 @@ app.get("/", (req: express.Request, res: express.Response) => {
   res.json({ status: "ok", message: "Backend API is running" });
 });
 
+app.post('/api/auth/guest', (req: Request, res: Response) => {
+  try {
+    // Создаем временный токен для гостя
+    const token = jwt.sign(
+      { userId: 'guest', role: 'guest' },
+      process.env.JWT_SECRET || 'your-secret-key',
+      { expiresIn: '24h' }
+    );
+
+    // Устанавливаем токен в куки
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    });
+
+    res.json({ 
+      message: 'Гостевой вход выполнен успешно',
+      user: { id: 'guest', role: 'guest' }
+    });
+  } catch (error) {
+    console.error('Guest login error:', error);
+    res.status(500).json({ error: 'Ошибка при создании гостевой сессии' });
+  }
+});
+
 // Обработчик для всех остальных маршрутов
 app.use('*', (req: express.Request, res: express.Response) => {
   res.status(404).json({ status: "error", message: "Route not found" });

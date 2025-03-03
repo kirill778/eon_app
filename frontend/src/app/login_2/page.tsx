@@ -28,8 +28,13 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Header } from "@/components/header"
+import { LectureCard } from "@/components/lecture-card"
+import { AuthorBlock } from "@/components/author-block"
+import { DescriptionCard } from "@/components/description-card"
+import { TextBlock } from "@/components/text-block"
+import { LectureAttribute } from "@/components/lecture-attribute"
 
-export default function LectureCard() {
+export default function LecturePage() {
   const router = useRouter()
   const [isLiked, setIsLiked] = React.useState(false)
   const [isReviewsCollapsed, setIsReviewsCollapsed] = React.useState(false)
@@ -112,162 +117,62 @@ export default function LectureCard() {
     <div className="min-h-screen bg-[#091B21] bg-[url('/background_gradient.svg')] bg-top bg-no-repeat bg-[length:100%_auto] text-white">
       <Header />
       
-      {/* Main Card */}
-      <Card className="relative overflow-hidden border-0 bg-black/20 text-white shadow-2xl w-full rounded-none h-[26.5vh]">
-        {/* Фоновое изображение */}
-        <div 
-          className="absolute inset-0 z-0 w-full"
-          style={{
-            backgroundImage: "url('/f1.png')",
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            width: '100%'
-          }}
-        >
-          {/* Затемняющий оверлей */}
-          <div className="absolute inset-0 bg-black/20 w-full" />
-        </div>
+      <div className="mt-4">
+        <LectureCard 
+          title="Семья, как база."
+          subtitle="Гони, но не загоняйся!"
+          rating="4.1"
+          reviewCount="83"
+          viewCount="328"
+          duration="40 мин"
+          imageUrl="/f1.png"
+        />
+      </div>
 
-        {/* Product Type Badge */}
-        <div className="absolute top-[6%] left-[4.2%] z-10 flex items-center gap-2 rounded-full bg-black/40 px-3 py-1.5">
-          <div className="h-5 w-5">
-            <img 
-              src="/lecture_ico.svg" 
-              alt="Лекция"
-              className="h-[14px] w-[14px] absolute top-[25%] left-[20%]"
-            />
-          </div>
-          <span className="text-sm font-medium">Лекция</span>
-        </div>
-
-        <CardHeader className="pb-0 relative z-10">
-          <div className="flex items-start gap-2">
-            <div className="flex-1">
-              <h3 className="text-[15px] font-[600] leading-[18.15px] absolute top-[73%] left-[15%]">
-                Семья, как база.
-                <br />
-                Гони, но не загоняйся!
-              </h3>
-            </div>
-            <div className="flex flex-col items-center">
-              <Button variant="ghost" size="icon" className="rounded-full">
-                <img src="/share_ico.svg" alt="Share" className="h-[18.96px] w-[18.89px] absolute top-[37%] left-[80%]" />
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="pb-4 relative z-10">
-          <div className="mt-[6.9%] flex items-center gap-2 text-sm text-gray-400 absolute left-[15%]">
-            <div className="flex items-center gap-1">
-              <span>☆</span>
-              <span>(58)</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <img src="/vector.svg" alt="Лекция" className="h-[12px] w-[12px] ml-[0px]" />
-              <span>130</span>
-            </div>
-            <div className="flex items-center gap-1 absolute left-[-6vw] top-[3.5vh]">
-              <img src="/time.svg" alt="Time" className="h-3 w-3" />
-              <span className="text-[13px] ml-[1.3vw] font-normal leading-[15.73px]">40 мин</span>
-            </div>
-          </div>
-        </CardContent>
-        <CardFooter className="flex items-center justify-end relative z-10">
-          <div className="flex items-center gap-3">
-            {/* Price */}
-            <span className="text-[15px] font-[400] leading-[18.15px] tracking-[1px] absolute left-[15%] top-[7.5vh]">2500 руб</span>
-            {/* Rate button */}
-            <Button className="rounded-full w-[109px] h-[44px] absolute top-[9vh] left-[58vw] gap-[10px] pt-[13px] pr-[28px] pb-[13px] pl-[28px] bg-[rgba(10,114,74,1)] hover:bg-emerald-700 shadow-[inset_0px_1px_1px_0px_rgba(36,186,128,1)] text-[15px]">Купить</Button>
-            {/* Language button */}
-            <Button variant="ghost" size="icon" className="rounded-full w-[50px] h-[26.923px] absolute top-[10.8vh] left-[15vw] rounded-[17px] bg-white/5 shadow-[inset_0px_1px_1px_0px_rgba(255,255,255,0.5)]">
-              <span className="text-[13px] font-[400] leading-[15.73px] tracking-[1px]">Рус</span>
-            </Button>
-          </div>
-        </CardFooter>
-
-        <Button variant="ghost" size="icon" className="rounded-full">
-                <img src="/icon_fav2.svg" alt="Share" className="h-[18.96px] w-[18.89px] absolute top-[27%] left-[80%]" />
-        </Button>
-        <Button variant="ghost" size="icon" className="rounded-full">
-                <img src="/chat_btn.svg" alt="Share" className="h-[25px] w-[25px] absolute top-[45%] left-[79%]" />
-        </Button>
-      </Card>
-
-      {/* Author block */}
-      <div className="mt-6 p-4">
-        <div className="flex justify-center">
-          <div className="flex items-center gap-4">
-            <div className="flex absolute z-10 top-[50.5%] left-[13%] h-[80px] w-[80px] items-center justify-center rounded-full text-xl font-semibold overflow-hidden bg-[url('/yn.svg')] bg-no-repeat">
-            </div>
-            <div className="flex absolute top-[51%] left-[14%] h-[63px] w-[63px] items-center justify-center rounded-full text-xl font-semibold overflow-hidden bg-[url('/yn.svg')] bg-no-repeat">
-               <img src="/avatar_bl.svg" alt="Avatar" className="h-[63px] w-[63px] object-cover" />
-            </div>
-            <div className="flex flex-col">
-              <span className="absolute top-[50%] left-[35%] text-sm text-white/50">Автор </span>
-              <h3 className="absolute top-[52.5%] left-[35%] text-[15px] font-[600] leading-[18.15px] font-inter">Вадим Сергеевич</h3>
-              <h3 className="absolute top-[54.7%] left-[35%] text-[15px] font-[600] leading-[18.15px] font-inter">Ровный</h3>
-              <div className="flex items-center gap-2">
-                <img src="/group_1271.svg" alt="Verified" className="w-[2px] absolute top-[58%] left-[32.4%]" />
-                <span className="absolute top-[57.6%] left-[34%] text-[13px] font-[400] leading-[15.73px] font-inter">Верифицирован</span>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="mt-6">
+        <AuthorBlock 
+          name="Вадим Сергеевич"
+          surname="Ровный"
+          isVerified={true}
+        />
       </div>
 
       {/* Description Section */}
-      <div className="mt-[500px] space-y-4">
-        <Card className="border-0 bg-black/20 p-6 text-white">
-          <h3 className="mb-2 text-sm text-gray-400">Описание</h3>
-          <p className="text-base leading-relaxed">
-            Данная лекция направлена на укрепление традиционных ценностей. После прохождения материала, вы станете лучше
-            ладить с тещей, и поймете, что жена – тоже друг человека! Узаете, что такое сход-развал. Получите пару
-            советов о том, как ухаживать за лысиной.
-          </p>
-        </Card>
+      <div className="mt-[78px] mx-[28px] space-y-[12px]">
+        <DescriptionCard 
+          title="Описание"
+          description="Данная лекция направлена на укрепление традиционных ценностей. После прохождения материала, вы станете лучше ладить с тещей, и поймете, что жена - тоже друг человека! Узаете, что такое сход-развал. Получите пару советов о том, как ухаживать за лысиной."
+        />
 
         {/* Required Skills Section */}
-        <Card className="border-0 bg-black/20 p-6 text-white">
-          <h3 className="mb-2 text-sm text-gray-400">Требуемые навыки</h3>
-          <div className="space-y-2">
-            <p className="text-base leading-relaxed">
-              Необходимо иметь низкий тембр, говорить размеренно.
-              <br />
-              Желательно быть лысым.
-            </p>
-          </div>
-        </Card>
+        <div className="mt-3">
+          <DescriptionCard 
+            title="Требуемые навыки"
+            description="Необходимо иметь низкий тембр, говорить размеренно.Желательно быть лысым."
+          />
+        </div>
 
         {/* Acquired Skills Section */}
-        <Card className="border-0 bg-black/20 p-6 text-white">
-          <h3 className="mb-2 text-sm text-gray-400">Приобретаемые навыки</h3>
-          <ul className="list-inside space-y-2 text-base leading-relaxed">
-            <li className="flex items-start">
-              <span className="mr-2">•</span>
-              <span>Сможете уверенно носить майку-алкушку в обществе</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">•</span>
-              <span>Узнаете как гнать и не загоняться</span>
-            </li>
-            <li className="flex items-start">
-              <span className="mr-2">•</span>
-              <span>Станете ровным пацанчиком</span>
-            </li>
-          </ul>
-        </Card>
+        <div className="mt-3">
+          <DescriptionCard 
+            title="Приобретаемые навыки"
+            description="• Сможете уверенно носить майку-алкушку в обществе • Узнаете как гнать и не загоняться • Станете ровным пацанчиком"
+          />
+        </div>
+
+        {/* Atribut lection in course */}
+       <div className="" style={{marginTop: '18px', marginLeft: '34px'}}>
+        <LectureAttribute text="Лекция доступна в составе курса" />
+       </div>
 
         {/* Text Block */}
-        <div className="mt-4 text-white">
-          <p className="text-base leading-relaxed">
-            Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не
-            находится. Чтобы не задерживаться долго, предлагаю жать на педаль. Ниже представленны медиа-материалы,
-            которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!
-          </p>
-          <p className="mt-4 text-base leading-relaxed">
-            Если ты здесь, значит тебе не все равно. Ты хочешь двигаться вперед, и это правильно. Не каждый готов
-            признать, что пора что-то менять. А ты – молодец! Давай вместе сделаем твою жизнь лучше, а семью крепче.
-          </p>
+        <div style={{marginTop: '26px', marginLeft: '22px'}}>
+          <TextBlock 
+            paragraphs={[
+              "Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не находится. Чтобы не задерживаться долго, предлагаю жать на педаль.",
+              "Ниже представленны медиа-материалы, которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!",
+            ]} 
+          />
         </div>
 
         {/* Start Text */}
@@ -579,4 +484,3 @@ export default function LectureCard() {
     </div>
   )
 }
-
