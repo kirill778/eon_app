@@ -33,6 +33,7 @@ import { AuthorBlock } from "@/components/author-block"
 import { DescriptionCard } from "@/components/description-card"
 import { TextBlock } from "@/components/text-block"
 import { LectureAttribute } from "@/components/lecture-attribute"
+import { PlayerMusic } from "@/components/player_music"
 
 export default function LecturePage() {
   const router = useRouter()
@@ -178,40 +179,10 @@ export default function LecturePage() {
 
         {/* Audio Player */}
         <div className="mt-4">
-          <h3 className="mb-2 text-sm text-gray-400 text-center w-full">Аудио</h3>
-          <audio 
-            ref={audioRef} 
-            className="hidden" 
-            src="https://cdn.pixabay.com/download/audio/2022/02/22/audio_d1718ab41b.mp3"
-            preload="auto"
-            crossOrigin="anonymous"
+          <PlayerMusic 
+            audioSrc="/test-audio.mp3"
+            title="audio156.mp3"
           />
-          <div className="flex items-center justify-center gap-4 rounded-lg bg-black/20 p-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-12 w-12 rounded-full"
-              onClick={() => {
-                if (audioRef.current) {
-                  if (isPlaying) {
-                    audioRef.current.pause()
-                  } else {
-                    audioRef.current.play()
-                  }
-                  setIsPlaying(!isPlaying)
-                }
-              }}
-            >
-              {isPlaying ? (
-                <div className="h-4 w-4 rounded-sm bg-white" />
-              ) : (
-                <div className="h-0 w-0 border-y-[8px] border-l-[16px] border-y-transparent border-l-white" />
-              )}
-            </Button>
-            <div className="text-sm text-gray-400">
-              {isPlaying ? "Нажмите, чтобы остановить" : "Нажмите, чтобы послушать"}
-            </div>
-          </div>
         </div>
 
         {/* Start Text */}
