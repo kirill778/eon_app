@@ -175,13 +175,6 @@ export default function LecturePage() {
           />
         </div>
 
-        {/* Start Text */}
-        <div className="mt-4 text-white">
-          <p className="text-base leading-relaxed">
-            Начнем лекцию с прослушивания звуков мотора. Что может быть лучше рева любимой ласточки? Чего же ты ждешь?
-            Запускай!
-          </p>
-        </div>
 
         {/* Audio Player */}
         <div className="mt-4">

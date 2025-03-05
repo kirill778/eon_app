@@ -20,6 +20,14 @@ export function TextBlock({ paragraphs }: TextBlockProps) {
           {paragraph}
         </p>
       ))}
+      <div className="flex justify-center gap-[25px] mt-[4px] ml-[17%]">
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+      </div>
+      
     </div>
   );
 } 
