@@ -125,22 +125,7 @@ export function PlayerMusic({
         </div>
       </div>
 
-      {/* Audio info */}
-      <div className="absolute left-0 right-0 bottom-[8px] px-4">
-        <div className="flex justify-between text-white/50 text-sm">
-          <span>{title}</span>
-          <span>{currentTime} / {duration}</span>
-        </div>
-      </div>
-
-      {/* Hidden audio element */}
-      <audio
-        ref={audioRef}
-        src={audioSrc}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-      />
+      
 
       {/* Progress bar with line thumb */}
       <input
@@ -154,6 +139,23 @@ export function PlayerMusic({
           [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[1px] [&::-webkit-slider-thumb]:h-[28px] 
           [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:mt-[-13px] [&::-webkit-slider-thumb]:ml-[0%] cursor-pointer
           [&::-webkit-slider-runnable-track]:transition-all [&::-webkit-slider-runnable-track]:duration-150 [&::-webkit-slider-runnable-track]:ease-out"
+      />
+
+      {/* Audio info */}
+      <div className="absolute left-[46%] bottom-[1%] right-0 bottom-[8px] px-4">
+        <div className="flex justify-between text-white/50 text-[11px]">
+          <span>{title}</span>
+          <span>{currentTime} / {duration}</span>
+        </div>
+      </div>
+
+      {/* Hidden audio element */}
+      <audio
+        ref={audioRef}
+        src={audioSrc}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={handleTimeUpdate}
+        onEnded={() => setIsPlaying(false)}
       />
     </div>
   )
