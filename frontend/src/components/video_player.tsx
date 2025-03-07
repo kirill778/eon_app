@@ -5,7 +5,7 @@ interface Props {
   xmlns: string;
 }
 
-export const PlayBtn = ({ className, xmlns }: Props): JSX.Element => {
+export const PlayBtn = ({ className, xmlns }: Props): React.ReactElement => {
   return (
     <svg
       className={`${className}`}

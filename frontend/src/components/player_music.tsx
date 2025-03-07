@@ -157,6 +157,14 @@ export function PlayerMusic({
         onLoadedMetadata={handleTimeUpdate}
         onEnded={() => setIsPlaying(false)}
       />
+
+      <div className="flex justify-center gap-[25px] pt-[33%] ml-[0%]">
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+      </div>
     </div>
   )
 }

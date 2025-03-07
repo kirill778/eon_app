@@ -34,6 +34,8 @@ import { DescriptionCard } from "@/components/description-card"
 import { TextBlock } from "@/components/text-block"
 import { LectureAttribute } from "@/components/lecture-attribute"
 import { PlayerMusic } from "@/components/player_music"
+import { VideoSimpleVideo } from "@/components/video_block"
+import { Image } from "@/components/picter_block"
 
 export default function LecturePage() {
   const router = useRouter()
@@ -196,53 +198,26 @@ export default function LecturePage() {
         </div>
 
         {/* Video Player */}
-        <div className="mt-4">
-          <h3 className="mb-2 text-sm text-gray-400 text-center w-full">Видео</h3>
-          <div className="rounded-lg overflow-hidden bg-black/20">
-            <div className="relative">
-              {/* Превью изображение */}
-              <div 
-                className="absolute inset-0 z-0"
-                style={{
-                  backgroundImage: "url('https://images.unsplash.com/photo-1494976388531-d1058494cdd8')",
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
-                <div className="absolute inset-0 bg-black/50" />
-              </div>
+        <div className="pt-[7%] ml-[7%]">
+          <VideoSimpleVideo />
+        </div>
 
-              <video
-                ref={videoRef}
-                className="w-full relative z-10"
-                src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-                onTimeUpdate={handleVideoTimeUpdate}
-                poster="https://images.unsplash.com/photo-1494976388531-d1058494cdd8"
-              />
-            </div>
-            <div className="p-4">
-              <div className="flex items-center justify-between mb-2">
-                <Button variant="ghost" size="icon" onClick={handleVideoPlayPause}>
-                  {isVideoPlaying ? <Pause className="h-6 w-6" /> : <Play className="h-6 w-6" />}
-                </Button>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={isNaN(progress) ? 0 : progress}
-                  onChange={handleVideoProgress}
-                  className="w-full mx-4"
-                />
-                <Button variant="ghost" size="icon" onClick={toggleMute}>
-                  {isMuted ? <VolumeX className="h-6 w-6" /> : <Volume2 className="h-6 w-6" />}
-                </Button>
-              </div>
-            </div>
-          </div>
+        {/* Picture Block */}
+        <div className="pt-[7%] ml-[7%]">
+          <Image />
+        </div>
+
+        <div style={{marginTop: '18%', marginLeft: '22px'}}>
+          <TextBlock 
+            paragraphs={[
+              "Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не находится. Чтобы не задерживаться долго, предлагаю жать на педаль.",
+              "Ниже представленны медиа-материалы, которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!",
+            ]} 
+          />
         </div>
 
         {/* Test Section */}
-        <div className="mt-8 space-y-4">
+        <div className="pt-[100%] space-y-4">
           <h3 className="text-lg font-medium text-gray-400 text-center">Итоговое задание</h3>
           <div className="flex justify-center">
             <Button 
