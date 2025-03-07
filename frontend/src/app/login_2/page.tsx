@@ -421,7 +421,7 @@ export default function LecturePage() {
       </div>
 
       {/* Footer Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#091b21] border-t border-[#ffffff]/10 px-4 py-2">
+    {/*  <div className="fixed bottom-0 left-0 right-0 bg-[#091b21] border-t border-[#ffffff]/10 px-4 py-2">
         <div className="max-w-md mx-auto flex justify-between items-center">
           <button 
             onClick={() => router.push('/courses')}
@@ -446,7 +446,7 @@ export default function LecturePage() {
             <span className="text-xs">Домашка</span>
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
