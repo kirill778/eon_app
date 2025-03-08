@@ -36,6 +36,12 @@ import { LectureAttribute } from "@/components/lecture-attribute"
 import { PlayerMusic } from "@/components/player_music"
 import { VideoSimpleVideo } from "@/components/video_block"
 import { Image } from "@/components/picter_block"
+import { FinalJob } from "@/components/final_job"
+import { TextBlock_liter } from "@/components/text-block_liter"
+import { Box } from "@/components/rating_section"
+import { ReviewsSection } from "@/components/reviews_section"
+import { OtherCourses } from "@/components/other_courses"
+
 
 export default function LecturePage() {
   const router = useRouter()
@@ -56,6 +62,7 @@ export default function LecturePage() {
       date: "08.11.2024",
       text: "Купил лекцию не глядя! Автор жжет, семейные ценности подтянул за неделю, спасибо!!",
       initials: "АД",
+      avatar: "/avatar_bl_jason.png"
     },
     {
       id: 2,
@@ -64,6 +71,7 @@ export default function LecturePage() {
       date: "08.11.2024",
       text: "Главное визуализировать! 5 звезд!",
       initials: "АП",
+      avatar: "/avatar_bl_jason.png"
     },
     {
       id: 3,
@@ -72,6 +80,7 @@ export default function LecturePage() {
       date: "08.11.2024",
       text: "",
       initials: "НП",
+      avatar: "/avatar_bl_jason.png"
     },
     {
       id: 4,
@@ -80,6 +89,7 @@ export default function LecturePage() {
       date: "08.11.2024",
       text: "Cool bra! Very nice job",
       initials: "AX",
+      avatar: "/avatar_bl_jason.png"
     },
   ]
 
@@ -207,6 +217,8 @@ export default function LecturePage() {
           <Image />
         </div>
 
+
+        {/* Text Block */}
         <div style={{marginTop: '18%', marginLeft: '22px'}}>
           <TextBlock 
             paragraphs={[
@@ -217,182 +229,41 @@ export default function LecturePage() {
         </div>
 
         {/* Test Section */}
-        <div className="pt-[100%] space-y-4">
-          <h3 className="text-lg font-medium text-gray-400 text-center">Итоговое задание</h3>
-          <div className="flex justify-center">
-            <Button 
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 rounded-full flex items-center gap-2"
-              onClick={() => router.push('/test')}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 5H7C6.46957 5 5.96086 5.21071 5.58579 5.58579C5.21071 5.96086 5 6.46957 5 7V19C5 19.5304 5.21071 20.0391 5.58579 20.4142C5.96086 20.7893 6.46957 21 7 21H17C17.5304 21 18.0391 20.7893 18.4142 20.4142C18.7893 20.0391 19 19.5304 19 19V7C19 6.46957 18.7893 5.96086 18.4142 5.58579C18.0391 5.21071 17.5304 5 17 5H15" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M13 3H11C9.89543 3 9 3.89543 9 5C9 6.10457 9.89543 7 11 7H13C14.1046 7 15 6.10457 15 5C15 3.89543 14.1046 3 13 3Z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Тест
-            </Button>
-          </div>
+        <div className="pt-[0%]">
+          <FinalJob />
         </div>
 
-        {/* Start Text */}
-        <div className="mt-4 text-white">
-          <p className="text-base leading-relaxed">
-            Рекомендую ознакомиться со следующими фильмами: rovnyezametki.com/vadua23/234rfdasf
-            giguli.ru/vadua233/fwerwegr234fr23
-          </p>
-        </div>
+         {/* Text Block */}
+         <div style={{marginTop: '12%', marginLeft: '10%'}}>
+          <TextBlock_liter 
+            paragraphs={[
+              "Рекомендую ознакомиться со следующими фильмами:\nrovnyezametki.com/vadua23/234rfdasf\ngiguli.ru/vadua233/fwerwegr234fr23",
+            ]} 
+          />
+          </div>
 
         {/* Rating Section */}
-        <div className="mt-8 space-y-4">
-          <div className="flex flex-col items-center gap-4 rounded-lg bg-black/20 p-6">
-            <h3 className="text-lg font-medium">Оценить лекцию</h3>
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Button key={star} variant="ghost" size="icon" className="h-8 w-8 hover:bg-black/20">
-                  <Star className="h-6 w-6" />
-                </Button>
-              ))}
-            </div>
-            <textarea
-              className="w-full rounded-lg bg-black/20 p-4 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-              placeholder="Оставить отзыв"
-              rows={3}
-            />
-            <Button variant="ghost" className="w-full border border-white/10">
-              Добавить отзыв
-            </Button>
-            <Button className="w-full bg-emerald-600 hover:bg-emerald-700">Завершить лекцию</Button>
-          </div>
+        <div className="pt-[7%] ml-[7%]">
+          <Box />
         </div>
 
         {/* Reviews Section */}
-        <div className="mt-8 space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-lg font-semibold">153 отзыва</span>
-                <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-white" />
-                  <span className="text-sm text-gray-400">{`4 (58)`}</span>
-                </div>
-              </div>
-              <p className="text-sm text-gray-400">Оставить отзыв можно только после покупки</p>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-gray-400"
-              onClick={() => setIsReviewsCollapsed(!isReviewsCollapsed)}
-            >
-              <span className="mr-2">Свернуть</span>
-              {isReviewsCollapsed ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
-            </Button>
-          </div>
-
-          {!isReviewsCollapsed && (
-            <div className="space-y-4">
-              {reviews.map((review) => (
-                <div key={review.id} className="rounded-lg bg-black/20 p-4">
-                  <div className="flex items-center gap-4">
-                    <Avatar className="h-10 w-10 shrink-0 border border-white/10">
-                      <AvatarFallback className="bg-black/40 text-sm">{review.initials}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-400">{review.date}</span>
-                        <div className="flex items-center">
-                          <Star className="h-4 w-4 fill-white" />
-                          <span className="ml-1 text-sm">{review.rating}</span>
-                        </div>
-                      </div>
-                      <h4 className="font-medium">{review.author}</h4>
-                      {review.text && <p className="text-sm text-gray-200">{review.text}</p>}
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              <div className="flex justify-center pt-4">
-                <Button variant="ghost" size="sm" className="text-gray-400">
-                  <ChevronUp className="mr-2 h-4 w-4" />К началу отзывов
-                </Button>
-              </div>
-            </div>
-          )}
+        <div className="pt-[78%]">
+          <ReviewsSection reviews={reviews} />
         </div>
 
         {/* Other Courses Section */}
-        <div className="mt-12 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Другие курсы автора</h2>
-          </div>
-
-          <div className="relative">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute -left-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </Button>
-
-            <div className="overflow-hidden">
-              <div className="relative">
-                <div
-                  className="relative aspect-[2/1] w-full overflow-hidden rounded-lg bg-cover bg-center bg-black/40"
-                  style={{
-                    backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.8))",
-                  }}
-                >
-                  <div className="absolute inset-0 p-6 flex flex-col justify-between">
-                    <div>
-                      <div className="flex items-center gap-2 text-sm text-gray-300">
-                        <Course className="h-4 w-4" />
-                        <span>Курс</span>
-                      </div>
-                      <h3 className="mt-2 text-xl font-bold">
-                        Семья, как база.
-                        <br />
-                        Гони, но не загоняйся!
-                      </h3>
-                    </div>
-
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <span>Вадим Ровный</span>
-                        <div className="h-1 w-1 rounded-full bg-gray-400" />
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4" />
-                          <span>(58)</span>
-                        </div>
-                        <div className="h-1 w-1 rounded-full bg-gray-400" />
-                        <span>130</span>
-                        <div className="h-1 w-1 rounded-full bg-gray-400" />
-                        <div className="flex items-center gap-1">
-                          <Timer className="h-4 w-4" />
-                          <span>1 час 30 мин</span>
-                        </div>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-300">Не верифицирован</span>
-                        <span className="text-xl font-bold">12 000 руб</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute -right-4 top-1/2 z-10 -translate-y-1/2 rounded-full bg-black/20"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </Button>
-          </div>
-        </div>
+        <OtherCourses
+          title="Другие курсы автора"
+          courseTitle="Семья, как база. Гони, но не загоняйся!"
+          author="Вадим Ровный"
+          rating="(58)"
+          students="130"
+          duration="1 час 30 мин"
+          price="12 000 руб"
+          isVerified={false}
+          imageUrl="/f1.png"
+        />
       </div>
 
       {/* Footer Navigation */}
