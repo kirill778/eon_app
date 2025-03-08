@@ -255,14 +255,15 @@ export default function LecturePage() {
         {/* Other Courses Section */}
         <OtherCourses
           title="Другие курсы автора"
-          courseTitle="Семья, как база. Гони, но не загоняйся!"
+          title2="Похожие курсы"
+          courseTitle={<>Семья, как база.<br />Гони, но не загоняйся!</>}
           author="Вадим Ровный"
           rating="(58)"
           students="130"
           duration="1 час 30 мин"
           price="12 000 руб"
           isVerified={false}
-          imageUrl="/f1.png"
+          imageUrl="/bg_4.png"
         />
       </div>
 

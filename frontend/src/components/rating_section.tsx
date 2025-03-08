@@ -46,9 +46,9 @@ export const Box = (): React.JSX.Element => {
             <rect x="1" y="0.5" width="319" height="44" rx="22" stroke="url(#paint0_linear_40_2284)"/>
             <defs>
             <linearGradient id="paint0_linear_40_2284" x1="114.786" y1="18.4821" x2="120.706" y2="52.7476" gradientUnits="userSpaceOnUse">
-            <stop stop-color="white" stop-opacity="0.15"/>
-            <stop offset="0.51" stop-color="white" stop-opacity="0.8"/>
-            <stop offset="1" stop-color="white" stop-opacity="0.25"/>
+              <stop stopColor="white" stopOpacity="0.15"/>
+              <stop offset="0.51" stopColor="white" stopOpacity="0.8"/>
+              <stop offset="1" stopColor="white" stopOpacity="0.25"/>
             </linearGradient>
             </defs>
             </svg>
@@ -71,7 +71,7 @@ export const Box = (): React.JSX.Element => {
 
         <button
             type="submit"
-            className="mt-4 w-[78%] h-[6vh] ml-[12%] inline-flex items-center gap-[10px] px-[28px] py-[13px] rounded-[30px] bg-[rgba(10,114,74,1)] hover:bg-[rgba(10,114,74,1)]"
+            className="mt-4 w-[78%] h-[6vh] ml-[12%] inline-flex items-center gap-[10px] px-[28px] py-[13px] rounded-[30px] bg-[rgba(10,114,74,1)] hover:bg-[rgba(10,114,74,1)] shadow-[inset_0px_1px_1px_0px_#24BA80]"
           >
            Завершить лекцию
           </button>
