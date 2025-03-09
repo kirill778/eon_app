@@ -16,7 +16,7 @@ export const TopBar = (): React.JSX.Element => {
           <rect width="320" height="45" rx="22.5" fill="white" fillOpacity="0.3"/>
         </g>
         <mask id="mask0_116_1155" style={{maskType: "alpha"}} maskUnits="userSpaceOnUse" x="0" y="0" width="320" height="45">
-          <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0H297.5C309.926 0 320 10.0736 320 22.5V22.5C320 34.9264 309.926 45 297.5 45H22.5C10.0736 45 0 34.9264 0 22.5V22.5Z" fill="#D9D9D9" fillOpacity="0.6"/>
+          <path d="M0 22.5C0 10.0736 10.0736 0 22.5 0H297.5C309.926 0 320 10.0736 320 22.5V22.5C320 34.9264 309.926 45 297.5 45H22.5C10.0736 45 0 34.9264 0 22.5V22.5Z" fill="#594790"/>
         </mask>
         <g mask="url(#mask0_116_1155)">
           <g filter="url(#filter1_i_116_1155)" style={{
@@ -33,7 +33,7 @@ export const TopBar = (): React.JSX.Element => {
             x="40"
             y="26"
             fill="white"
-            className={activeTab === "courses" ? "font-bold" : ""}
+            fontWeight={activeTab === "courses" ? "400" : "normal"}
           >
             Мои курсы
           </text>
@@ -44,7 +44,7 @@ export const TopBar = (): React.JSX.Element => {
             x="194"
             y="26"
             fill={activeTab === "services" ? "white" : "rgba(255, 255, 255, 0.5)"}
-            className={activeTab === "services" ? "font-bold" : ""}
+            fontWeight={activeTab === "services" ? "400" : "normal"}
           >
             Мои услуги
           </text>

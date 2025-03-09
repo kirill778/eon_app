@@ -30,6 +30,10 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Header } from "@/components/header_t"
 import { TopBar } from "@/components/top-bar"
 import { Swap } from "@/components/swap"
+import { Search } from "@/components/search"
+import { Sort } from "@/components/sort"
+import { Filter } from "@/components/filter"
+import { ButtonCreateNewLection } from "@/components/button-create-new-lection"
 import { LectureCard } from "@/components/lecture-card"
 import { AuthorBlock } from "@/components/author-block"
 import { DescriptionCard } from "@/components/description-card"
@@ -136,126 +140,43 @@ export default function LecturePage() {
         <TopBar  />
       </div>
 
-      <div className="mt-[8%] ml-[28%]">
+      <div className="mt-[7%] ml-[28%]">
         <Swap />
       </div>
 
-      {/* Description Section */}
-      <div className="mt-[78px] mx-[28px] space-y-[12px]">
-        <DescriptionCard 
-          title="Описание"
-          description="Данная лекция направлена на укрепление традиционных ценностей. После прохождения материала, вы станете лучше ладить с тещей, и поймете, что жена - тоже друг человека! Узаете, что такое сход-развал. Получите пару советов о том, как ухаживать за лысиной."
-        />
+      <div className="mt-[8%] ml-[7%]">
+        <Search />
+      </div>  
 
-        {/* Required Skills Section */}
-        <div className="mt-3">
-          <DescriptionCard 
-            title="Требуемые навыки"
-            description="Необходимо иметь низкий тембр, говорить размеренно.Желательно быть лысым."
+      <div className="flex">
+        <div className="mt-[6%] ml-[11%]">
+          <Sort
+            groupClassName="!shadow-[inset_0px_1px_1px_#7f72aa] !bg-[#594790]"
+            polygon="filter_ico2.svg"
+            polygonClassName="!h-1.5 !left-[3px] !w-2.5 !top-[5px]"
+            text="По популярности"
           />
         </div>
 
-        {/* Acquired Skills Section */}
-        <div className="mt-3">
-          <DescriptionCard 
-            title="Приобретаемые навыки"
-            description="• Сможете уверенно носить майку-алкушку в обществе • Узнаете как гнать и не загоняться • Станете ровным пацанчиком"
+        <div className="mt-[6%] ml-[20%]">
+          <Filter
+            groupClassName="!shadow-[inset_0px_1px_1px_#7f72aa] !bg-[#594790]"
+            polygon="filter_ico.svg"
+            polygonClassName="!h-1.5 !left-[3px] !w-2.5 !top-[5px]"
+            text="Фильтры"
           />
         </div>
-
-        {/* Atribut lection in course */}
-       <div className="" style={{marginTop: '18px', marginLeft: '34px'}}>
-        <LectureAttribute text="Лекция доступна в составе курса" />
-       </div>
-
-        {/* Text Block */}
-        <div style={{marginTop: '26px', marginLeft: '22px'}}>
-          <TextBlock 
-            paragraphs={[
-              "Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не находится. Чтобы не задерживаться долго, предлагаю жать на педаль.",
-              "Ниже представленны медиа-материалы, которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!",
-            ]} 
-          />
-        </div>
-
-
-        {/* Audio Player */}
-        <div className="mt-4">
-          <PlayerMusic 
-            audioSrc="/test-audio.mp3"
-            title="audio156.mp3"
-          />
-        </div>
-
-        {/* Text Block */}
-        <div style={{marginTop: '20%', marginLeft: '22px'}}>
-          <TextBlock 
-            paragraphs={[
-              "Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не находится. Чтобы не задерживаться долго, предлагаю жать на педаль.",
-              "Ниже представленны медиа-материалы, которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!",
-            ]} 
-          />
-        </div>
-
-        {/* Video Player */}
-        <div className="pt-[7%] ml-[7%]">
-          <VideoSimpleVideo />
-        </div>
-
-        {/* Picture Block */}
-        <div className="pt-[7%] ml-[7%]">
-          <Image />
-        </div>
-
-
-        {/* Text Block */}
-        <div style={{marginTop: '18%', marginLeft: '22px'}}>
-          <TextBlock 
-            paragraphs={[
-              "Короткий гудок тебе, бро! Начать лекцию хотелось бы со вступительного слова. Хотелось бы, но слов не находится. Чтобы не задерживаться долго, предлагаю жать на педаль.",
-              "Ниже представленны медиа-материалы, которые помогут тебе сделать жизнь быстрее, но интересней. Поехали!",
-            ]} 
-          />
-        </div>
-
-        {/* Test Section */}
-        <div className="pt-[0%]">
-          <FinalJob />
-        </div>
-
-         {/* Text Block */}
-         <div style={{marginTop: '12%', marginLeft: '10%'}}>
-          <TextBlock_liter 
-            paragraphs={[
-              "Рекомендую ознакомиться со следующими фильмами:\nrovnyezametki.com/vadua23/234rfdasf\ngiguli.ru/vadua233/fwerwegr234fr23",
-            ]} 
-          />
-          </div>
-
-        {/* Rating Section */}
-        <div className="pt-[7%] ml-[7%]">
-          <Box />
-        </div>
-
-        {/* Reviews Section */}
-        <div className="pt-[78%]">
-          <ReviewsSection reviews={reviews} />
-        </div>
-
-        {/* Other Courses Section */}
-        <OtherCourses
-          title="Другие курсы автора"
-          title2="Похожие курсы"
-          courseTitle={<>Семья, как база.<br />Гони, но не загоняйся!</>}
-          author="Вадим Ровный"
-          rating="(58)"
-          students="130"
-          duration="1 час 30 мин"
-          price="12 000 руб"
-          isVerified={false}
-          imageUrl="/bg_4.png"
-        />
       </div>
+
+      <div className="mt-[6%] ml-[7%]">
+        <ButtonCreateNewLection
+          btnFClassName="!border-[none] !shadow-[unset] !w-80"
+          className="!justify-center !flex !w-80"
+          property1="glass-btn"
+          text="+ Создать новую лекцию" />
+      </div>
+
+      
 
       {/* Footer Navigation */}
     {/*  <div className="fixed bottom-0 left-0 right-0 bg-[#091b21] border-t border-[#ffffff]/10 px-4 py-2">
