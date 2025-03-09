@@ -28,26 +28,11 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Header } from "@/components/header_t_2"
-import { TopBar } from "@/components/top-bar"
-import { Swap } from "@/components/swap"
-import { Search } from "@/components/search"
-import { Sort } from "@/components/sort"
-import { Filter } from "@/components/filter"
-import { ButtonCreateNewLection } from "@/components/button-create-new-lection"
-import { LectureCard } from "@/components/lecture-card"
-import { AuthorBlock } from "@/components/author-block"
-import { DescriptionCard } from "@/components/description-card"
-import { TextBlock } from "@/components/text-block"
-import { LectureAttribute } from "@/components/lecture-attribute"
-import { PlayerMusic } from "@/components/player_music"
-import { VideoSimpleVideo } from "@/components/video_block"
-import { Image } from "@/components/picter_block"
-import { FinalJob } from "@/components/final_job"
-import { TextBlock_liter } from "@/components/text-block_liter"
-import { Box } from "@/components/rating_section"
-import { ReviewsSection } from "@/components/reviews_section"
-import { OtherCourses } from "@/components/other_courses"
-
+import { Complexity } from "@/components/component_lecture/complexity"
+import { CourseName } from "@/components/component_lecture/course-name"
+import { Cover } from "@/components/component_lecture/cover"
+import { CourseNamePay } from "@/components/component_lecture/course-name-pay"
+import { DropDownList } from "@/components/component_lecture/drop-down-list"
 
 export default function LecturePage() {
   const router = useRouter()
@@ -59,6 +44,20 @@ export default function LecturePage() {
   const [progress, setProgress] = React.useState(0)
   const audioRef = React.useRef<HTMLAudioElement>(null)
   const videoRef = React.useRef<HTMLVideoElement>(null)
+
+  // Новые состояния для времени прохождения
+  const [duration, setDuration] = React.useState("0");
+  const [durationUnit, setDurationUnit] = React.useState<"мин" | "час">("мин");
+
+  // Новые состояния для времени прохождения
+  const [duration_2, setDuration_2] = React.useState("0");
+  const [durationUnit_2, setDurationUnit_2] = React.useState<"руб" | "$">("руб");
+
+  // Обновленное состояние для языка - только единица измерения, без текстового поля
+  const [language, setLanguage] = React.useState<"рус" | "англ">("рус");
+
+  // Новое состояние для способа оплаты
+  const [paymentMethod, setPaymentMethod] = React.useState("Выберите способ оплаты");
 
   const reviews = [
     {
@@ -135,49 +134,128 @@ export default function LecturePage() {
   return (
     <div className="min-h-screen bg-[#14141F] bg-[url('/background_gradient_purple.svg')] bg-top bg-no-repeat bg-[length:100%_auto] text-white">
       <Header />
-      
-      <div className="mt-[23.5%] ml-[7%]">
-        <TopBar  />
+
+      <div className="mt-[8%] ml-[7%]">
+        <CourseName 
+          placeholder="Введите название курса" 
+          defaultValue="" 
+        />
+      </div>  
+
+      <div className="mt-[8%] ml-[0%]">
+        <Cover
+          className="!relative"
+          lectureNotification="lecture_notification_ico.svg"
+          lectureNotificationClassName="!h-[62px] !w-[62px] !left-[85px]"
+          property1="lec"
+        />
       </div>
 
-      <div className="mt-[7%] ml-[28%]">
-        <Swap />
+      <div className="mt-[7%] ml-[7%]">
+        <CourseName 
+          placeholder="Введите описание лекции" 
+          defaultValue="" 
+        />
+      </div> 
+
+      <div className="mt-[7%] ml-[7%]">
+        <CourseName 
+          placeholder="Требуемые навыки" 
+          defaultValue="" 
+        />
       </div>
 
       <div className="mt-[8%] ml-[7%]">
-        <Search />
-      </div>  
+        <CourseName 
+          placeholder="Приобретаемые навыки" 
+          defaultValue="" 
+        />
+      </div>
 
-      <div className="flex">
-        <div className="mt-[6%] ml-[11%]">
-          <Sort
-            groupClassName="!shadow-[inset_0px_1px_1px_#7f72aa] !bg-[#594790]"
-            polygon="filter_ico2.svg"
-            polygonClassName="!h-1.5 !left-[3px] !w-2.5 !top-[5px]"
-            text="По популярности"
-          />
-        </div>
+      <div className="mt-[8%] ml-[13%] flex items-center">
+        <span className="text-white text-right text-[13px] font-normal mr-4">Время прохождения</span>
+        <CourseNamePay 
+          value={duration}
+          unit={durationUnit}
+          onValueChange={(value) => {
+            setDuration(value);
+          }}
+          onUnitChange={(unit) => {
+            setDurationUnit(unit);
+          }}
+        />
+      </div>
 
-        <div className="mt-[6%] ml-[20%]">
-          <Filter
-            groupClassName="!shadow-[inset_0px_1px_1px_#7f72aa] !bg-[#594790]"
-            polygon="filter_ico.svg"
-            polygonClassName="!h-1.5 !left-[3px] !w-2.5 !top-[5px]"
-            text="Фильтры"
-          />
+      <div className="mt-[9%] ml-[7%]">
+        <DropDownList 
+          placeholder="Выберите способ оплаты" 
+          defaultValue={paymentMethod} 
+          onChange={(value) => {
+            setPaymentMethod(value);
+            console.log("Выбран способ оплаты:", value);
+          }}
+        />
+      </div>
+
+      <div className="mt-[10%] ml-[6%] flex items-center">
+        <span className="text-white text-right text-[13px] font-normal mr-4 w-[150px]">Стоимость лекции отдельно</span>
+        <CourseNamePay 
+          value={duration_2}
+          unit={durationUnit_2}
+          onValueChange={(value) => {
+            setDuration_2(value);
+          }}
+          onUnitChange={(unit: "руб" | "$") => {
+            setDurationUnit_2(unit);
+          }}
+        />
+      </div>
+
+      <div className="mt-[9%] ml-[13%]">
+        <Complexity />
+      </div>
+
+      <div className="mt-[10%] ml-[0%] flex items-center">
+        <span className="text-white text-right text-[13px] font-normal mr-4 w-[150px]">Язык</span>
+        
+        {/* Компонент для выбора языка */}
+        <div className="relative inline-block ml-[6%]">
+          <div className="relative">
+            <svg width="90" height="44" viewBox="0 0 90 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0.5" y="0.5" width="89" height="43" rx="21.5" stroke="url(#paint0_linear_125_1813)"/>
+              <defs>
+                <linearGradient id="paint0_linear_125_1813" x1="22" y1="18.0714" x2="33.9" y2="42.123" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="white" stopOpacity="0.15"/>
+                  <stop offset="0.51" stopColor="white" stopOpacity="0.8"/>
+                  <stop offset="1" stopColor="white" stopOpacity="0.25"/>
+                </linearGradient>
+              </defs>
+            </svg>
+
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="relative">
+                <select 
+                  className="appearance-none bg-transparent border-none text-white text-[13px] focus:outline-none cursor-pointer pr-5"
+                  onChange={(e) => setLanguage(e.target.value as "рус" | "англ")}
+                  value={language}
+                >
+                  <option value="рус">Рус</option>
+                  <option value="Англ">Англ</option>
+                </select>
+                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center text-white">
+                  <svg className="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                    <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="mt-[6%] ml-[7%]">
-        <ButtonCreateNewLection
-          btnFClassName="!border-[none] !shadow-[unset] !w-80"
-          className="!justify-center !flex !w-80"
-          property1="glass-btn"
-          text="+ Создать новую лекцию" />
+      <div className="mt-[9%] ml-[13%]">
+        <Complexity />
       </div>
-
-      
-
       {/* Footer Navigation */}
     {/*  <div className="fixed bottom-0 left-0 right-0 bg-[#091b21] border-t border-[#ffffff]/10 px-4 py-2">
         <div className="max-w-md mx-auto flex justify-between items-center">
