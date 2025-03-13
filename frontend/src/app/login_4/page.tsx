@@ -61,6 +61,14 @@ export default function LecturePage() {
   // Новое состояние для способа оплаты
   const [paymentMethod, setPaymentMethod] = React.useState("Выберите способ оплаты");
 
+  // Добавляем состояние для хранения текстовых блоков
+  const [textBlocks, setTextBlocks] = React.useState<number[]>([]);
+  
+  // Функция для добавления нового текстового блока
+  const addTextBlock = () => {
+    setTextBlocks([...textBlocks, textBlocks.length]);
+  };
+
   const reviews = [
     {
       id: 1,
@@ -255,12 +263,15 @@ export default function LecturePage() {
         </div>
       </div>
 
-      <div className="mt-[9%] ml-[0%]">
-        <Block />
-      </div>
+      {/* Отображаем текстовые блоки */}
+      {textBlocks.map((id) => (
+        <div key={id} className="mt-[9%] ml-[7%]">
+          <BlockText />
+        </div>
+      ))}
 
-      <div className="mt-[9%] ml-[7%]">
-        <BlockText />
+      <div className="mt-[9%] ml-[0%]">
+        <Block onAddTextBlock={addTextBlock} />
       </div>
 
       {/* Footer Navigation */}

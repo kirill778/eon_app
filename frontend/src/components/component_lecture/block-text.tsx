@@ -67,11 +67,6 @@ export const BlockText = (): JSX.Element => {
       </div>
 
       <div className="relative w-52 h-[49px]">
-        <img
-          className="absolute w-[110px] h-px top-[49px] left-[49px]"
-          alt="Vector"
-          src={vector358}
-        />
 
         <div className="absolute w-[210px] h-[26px] top-0 left-0">
           <div className="absolute w-[25px] h-[25px] top-px left-0 bg-[url(/ellipse-27.svg)] bg-[100%_100%]">
@@ -88,6 +83,14 @@ export const BlockText = (): JSX.Element => {
             Сделать модуль доступным для ознакомительной версии
           </p>
         </div>
+
+        <div className="flex justify-center gap-[25px] mt-[30%] ml-[0%]">
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+        <div className="w-[3px] h-[3px] rounded-full bg-white opacity-30" />
+      </div>
       </div>
     </div>
   );
