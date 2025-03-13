@@ -47,7 +47,7 @@ export const CourseNamePay = ({
             
             <div className="relative">
               <select 
-                className="appearance-none bg-transparent border-none text-white text-[13px] focus:outline-none cursor-pointer pr-5"
+                className="appearance-none bg-transparent border-none text-white/50 text-[13px] focus:outline-none cursor-pointer pr-5"
                 onChange={handleUnitChange}
                 value={unit}
               >
