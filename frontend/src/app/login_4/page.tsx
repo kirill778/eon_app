@@ -34,6 +34,7 @@ import { Cover } from "@/components/component_lecture/cover"
 import { CourseNamePay } from "@/components/component_lecture/course-name-pay"
 import { DropDownList } from "@/components/component_lecture/drop-down-list"
 import { Block } from "@/components/component_lecture/block"
+import { BlockText } from "@/components/component_lecture/block-text"
 
 export default function LecturePage() {
   const router = useRouter()
@@ -257,6 +258,11 @@ export default function LecturePage() {
       <div className="mt-[9%] ml-[0%]">
         <Block />
       </div>
+
+      <div className="mt-[9%] ml-[7%]">
+        <BlockText />
+      </div>
+
       {/* Footer Navigation */}
     {/*  <div className="fixed bottom-0 left-0 right-0 bg-[#091b21] border-t border-[#ffffff]/10 px-4 py-2">
         <div className="max-w-md mx-auto flex justify-between items-center">
